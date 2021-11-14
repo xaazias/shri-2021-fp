@@ -74,12 +74,6 @@ const processSequence = ({ value, writeLog, handleSuccess, handleError }) => {
   const setParams = assoc("number", __, { from: "10", to: "2" })
   const logAnimal = compose(handleSuccess, getResult)
 
-  const validateNumber = ifElse(
-    isValidNumber,
-    calculateNumber,
-    handleValidationError
-  )
-
   const isValidNumber = allPass([
     isLengthMoreThanTwo,
     isLengthLessThanTen,
@@ -115,6 +109,12 @@ const processSequence = ({ value, writeLog, handleSuccess, handleError }) => {
     tap(writeLog),
     round,
     toNumber
+  )
+
+  const validateNumber = ifElse(
+    isValidNumber,
+    calculateNumber,
+    handleValidationError
   )
 
   const app = compose(validateNumber, tap(writeLog))
